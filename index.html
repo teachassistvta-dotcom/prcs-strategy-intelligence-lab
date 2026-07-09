@@ -170,18 +170,7 @@
 
       <div class="map-layout">
 
-        <div id="map">
-          <div class="map-placeholder">
-            <div class="placeholder-icon">PK</div>
-
-            <h3>Pakistan interactive map</h3>
-
-            <p>
-              The geographic boundary file will be connected
-              in the next step.
-            </p>
-          </div>
-        </div>
+       <div id="map"></div>
 
 
         <aside class="province-panel">
@@ -190,35 +179,33 @@
             SELECTED AREA
           </p>
 
-          <h3>Pakistan Overview</h3>
+<h3 id="area-name">Pakistan Overview</h3>
 
-          <p class="panel-description">
-            Click a province on the map to view its illustrative
-            vulnerability and institutional profile.
-          </p>
+<p id="area-description" class="panel-description">
+  Click a province on the map to view its illustrative
+  vulnerability and institutional profile.
+</p>
 
 
-          <div class="metric-grid">
+          <div class="metric-card">
+  <span>Health vulnerability</span>
+  <strong id="health-score">High</strong>
+</div>
 
-            <div class="metric-card">
-              <span>Health vulnerability</span>
-              <strong>High</strong>
-            </div>
+<div class="metric-card">
+  <span>WASH vulnerability</span>
+  <strong id="wash-score">High</strong>
+</div>
 
-            <div class="metric-card">
-              <span>WASH vulnerability</span>
-              <strong>High</strong>
-            </div>
+<div class="metric-card">
+  <span>Climate exposure</span>
+  <strong id="climate-score">Very High</strong>
+</div>
 
-            <div class="metric-card">
-              <span>Climate exposure</span>
-              <strong>Very High</strong>
-            </div>
-
-            <div class="metric-card">
-              <span>Branch readiness</span>
-              <strong>Developing</strong>
-            </div>
+<div class="metric-card">
+  <span>Branch readiness</span>
+  <strong id="readiness-score">Developing</strong>
+</div>
 
           </div>
 
@@ -226,10 +213,10 @@
           <div class="recommendation-card">
             <span>Illustrative strategic direction</span>
 
-            <strong>
-              Strengthen integrated emergency Health and WASH
-              preparedness.
-            </strong>
+           <strong id="strategic-direction">
+  Strengthen integrated emergency Health and WASH
+  preparedness.
+</strong>
           </div>
 
         </aside>
