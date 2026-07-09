@@ -32,17 +32,6 @@ tabButtons.forEach((button) => {
 });
 
 
-const layerButtons = document.querySelectorAll(".layer-button");
-
-layerButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    layerButtons.forEach((item) => {
-      item.classList.remove("active");
-    });
-
-    button.classList.add("active");
-  });
-});
 
 
 const criteria = [
