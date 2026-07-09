@@ -176,42 +176,58 @@ calculateScore();
 
 console.log("PRCS Strategy Intelligence Lab loaded successfully");
 /* ---------------------------------------------------------
-   8. INTERACTIVE PAKISTAN MAP
-   --------------------------------------------------------- */
+  /* =========================================================
+   INTERACTIVE PAKISTAN MAP WITH SWITCHABLE LAYERS
+   ========================================================= */
 
 const mapElement = document.getElementById("map");
 
-if (
-  mapElement &&
-  typeof L !== "undefined"
-) {
+if (mapElement && typeof L !== "undefined") {
+
   const pakistanMap = L.map("map", {
     zoomControl: true,
     scrollWheelZoom: true
   }).setView([30.3753, 69.3451], 5);
 
+
   L.tileLayer(
     "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
     {
       maxZoom: 18,
-      attribution:
-        "&copy; OpenStreetMap contributors"
+      attribution: "&copy; OpenStreetMap contributors"
     }
   ).addTo(pakistanMap);
 
 
-  /* Illustrative provincial data */
+  /*
+    All values below are illustrative scores from 1 to 5.
+
+    1 = Low
+    2 = Moderate
+    3 = Elevated
+    4 = High
+    5 = Very High
+  */
 
   const provinceData = [
     {
       name: "Punjab",
       coordinates: [31.1704, 72.7097],
-      health: "High",
-      wash: "Moderate",
-      climate: "High",
+
+      scores: {
+        combined: 3.8,
+        health: 4.0,
+        wash: 3.0,
+        climate: 4.0,
+        displacement: 2.0,
+        reach: 4.5
+      },
+
       readiness: "Established",
+
       description:
         "High population concentration, major health-service platforms and significant flood, heat and urban vulnerability.",
+
       direction:
         "Strengthen integrated urban and rural health services, heat preparedness and branch-led emergency response."
     },
@@ -219,12 +235,21 @@ if (
     {
       name: "Sindh",
       coordinates: [25.8943, 68.5247],
-      health: "Very High",
-      wash: "Very High",
-      climate: "Very High",
+
+      scores: {
+        combined: 4.9,
+        health: 5.0,
+        wash: 5.0,
+        climate: 5.0,
+        displacement: 4.0,
+        reach: 3.5
+      },
+
       readiness: "Developing",
+
       description:
-        "Severe flood, heat, water-security, nutrition and urban-informal-settlement risks require integrated action.",
+        "Severe flood, heat, water-security, nutrition and urban informal-settlement risks require integrated action.",
+
       direction:
         "Prioritise climate-resilient Health and WASH services, emergency readiness and underserved population coverage."
     },
@@ -232,12 +257,21 @@ if (
     {
       name: "Khyber Pakhtunkhwa",
       coordinates: [34.9526, 72.3311],
-      health: "High",
-      wash: "High",
-      climate: "High",
+
+      scores: {
+        combined: 4.3,
+        health: 4.0,
+        wash: 4.0,
+        climate: 4.0,
+        displacement: 5.0,
+        reach: 4.0
+      },
+
       readiness: "Established",
+
       description:
         "Mountain, displacement, cross-border, disaster and hard-to-reach service-delivery risks shape strategic needs.",
+
       direction:
         "Strengthen mobile outreach, epidemic preparedness, branch readiness and services for displaced and remote communities."
     },
@@ -245,12 +279,21 @@ if (
     {
       name: "Balochistan",
       coordinates: [28.4907, 65.0958],
-      health: "Very High",
-      wash: "Very High",
-      climate: "Very High",
+
+      scores: {
+        combined: 5.0,
+        health: 5.0,
+        wash: 5.0,
+        climate: 5.0,
+        displacement: 4.0,
+        reach: 2.0
+      },
+
       readiness: "Foundational",
+
       description:
         "Large distances, drought, water scarcity, limited service coverage and weak humanitarian access increase vulnerability.",
+
       direction:
         "Invest in branch capacity, mobile service delivery, water security and strategic partnerships for remote areas."
     },
@@ -258,12 +301,21 @@ if (
     {
       name: "Gilgit-Baltistan",
       coordinates: [35.8026, 74.9832],
-      health: "Moderate",
-      wash: "Moderate",
-      climate: "Very High",
+
+      scores: {
+        combined: 3.7,
+        health: 2.5,
+        wash: 2.5,
+        climate: 5.0,
+        displacement: 2.0,
+        reach: 2.5
+      },
+
       readiness: "Developing",
+
       description:
         "Glacial lake outburst floods, landslides, isolation and limited emergency access are major strategic concerns.",
+
       direction:
         "Strengthen anticipatory action, mountain emergency preparedness and climate-resilient branch systems."
     },
@@ -271,12 +323,21 @@ if (
     {
       name: "Azad Jammu and Kashmir",
       coordinates: [33.9259, 73.7810],
-      health: "Moderate",
-      wash: "Moderate",
-      climate: "High",
+
+      scores: {
+        combined: 3.4,
+        health: 2.5,
+        wash: 2.5,
+        climate: 4.0,
+        displacement: 2.5,
+        reach: 3.0
+      },
+
       readiness: "Developing",
+
       description:
         "Mountain hazards, access limitations and dispersed communities require strong local preparedness and outreach.",
+
       direction:
         "Strengthen community preparedness, emergency health response and branch-level logistics."
     },
@@ -284,72 +345,144 @@ if (
     {
       name: "Islamabad Capital Territory",
       coordinates: [33.6844, 73.0479],
-      health: "Moderate",
-      wash: "Moderate",
-      climate: "Moderate",
+
+      scores: {
+        combined: 2.2,
+        health: 2.0,
+        wash: 2.0,
+        climate: 2.0,
+        displacement: 2.0,
+        reach: 5.0
+      },
+
       readiness: "Advanced",
+
       description:
         "National coordination, governance and institutional systems provide opportunities for leadership and technical support.",
+
       direction:
         "Position NHQ as the national coordination, standards, learning, financing and technical-assistance hub."
     }
   ];
 
 
-  /* Colours based on vulnerability */
+  const layerNames = {
+    combined: "Combined Priority",
+    health: "Health Vulnerability",
+    wash: "WASH Vulnerability",
+    climate: "Climate Exposure",
+    displacement: "Displacement Pressure",
+    reach: "PRCS Reach"
+  };
 
-  function getMarkerColour(level) {
-    if (level === "Very High") {
-      return "#b5202e";
+
+  let selectedLayer = "combined";
+  let selectedProvince = null;
+
+  const provinceMarkers = [];
+
+
+  function scoreToLabel(score) {
+    if (score >= 4.5) {
+      return "Very High";
     }
 
-    if (level === "High") {
-      return "#d97706";
+    if (score >= 3.5) {
+      return "High";
     }
 
-    if (level === "Moderate") {
-      return "#d4a72c";
+    if (score >= 2.5) {
+      return "Moderate";
     }
 
-    return "#0f8b8d";
+    if (score >= 1.5) {
+      return "Low";
+    }
+
+    return "Very Low";
   }
 
 
-  /* Update the side panel */
+  /*
+    Vulnerability layers:
+    High scores appear red.
+
+    PRCS Reach:
+    High scores appear green because stronger reach
+    represents greater existing operational presence.
+  */
+
+  function getLayerColour(score, layer) {
+
+    if (layer === "reach") {
+      if (score >= 4.5) {
+        return "#16784a";
+      }
+
+      if (score >= 3.5) {
+        return "#2f9b67";
+      }
+
+      if (score >= 2.5) {
+        return "#d4a72c";
+      }
+
+      if (score >= 1.5) {
+        return "#d97706";
+      }
+
+      return "#b5202e";
+    }
+
+
+    if (score >= 4.5) {
+      return "#b5202e";
+    }
+
+    if (score >= 3.5) {
+      return "#d95f30";
+    }
+
+    if (score >= 2.5) {
+      return "#d4a72c";
+    }
+
+    if (score >= 1.5) {
+      return "#4fa5a7";
+    }
+
+    return "#2f855a";
+  }
+
+
+  function getMarkerRadius(score) {
+    return 9 + score * 2.3;
+  }
+
 
   function updateProvincePanel(province) {
+
     const name =
       document.getElementById("area-name");
 
     const description =
-      document.getElementById(
-        "area-description"
-      );
+      document.getElementById("area-description");
 
     const health =
-      document.getElementById(
-        "health-score"
-      );
+      document.getElementById("health-score");
 
     const wash =
-      document.getElementById(
-        "wash-score"
-      );
+      document.getElementById("wash-score");
 
     const climate =
-      document.getElementById(
-        "climate-score"
-      );
+      document.getElementById("climate-score");
 
     const readiness =
-      document.getElementById(
-        "readiness-score"
-      );
+      document.getElementById("readiness-score");
 
     const direction =
-      document.getElementById(
-        "strategic-direction"
-      );
+      document.getElementById("strategic-direction");
+
 
     if (name) {
       name.textContent = province.name;
@@ -357,22 +490,26 @@ if (
 
     if (description) {
       description.textContent =
-        province.description;
+        `${layerNames[selectedLayer]}: ${
+          scoreToLabel(
+            province.scores[selectedLayer]
+          )
+        }. ${province.description}`;
     }
 
     if (health) {
       health.textContent =
-        province.health;
+        scoreToLabel(province.scores.health);
     }
 
     if (wash) {
       wash.textContent =
-        province.wash;
+        scoreToLabel(province.scores.wash);
     }
 
     if (climate) {
       climate.textContent =
-        province.climate;
+        scoreToLabel(province.scores.climate);
     }
 
     if (readiness) {
@@ -387,42 +524,141 @@ if (
   }
 
 
-  /* Add clickable province circles */
+  function updateMapLayer(layer) {
+
+    selectedLayer = layer;
+
+    provinceMarkers.forEach((item) => {
+
+      const score =
+        item.province.scores[layer];
+
+      item.marker.setStyle({
+        radius: getMarkerRadius(score),
+        fillColor: getLayerColour(score, layer),
+        color: "#ffffff",
+        weight: 3,
+        opacity: 1,
+        fillOpacity: 0.9
+      });
+
+      item.marker.unbindTooltip();
+
+      item.marker.bindTooltip(
+        `
+          <strong>${item.province.name}</strong><br>
+          ${layerNames[layer]}:
+          ${scoreToLabel(score)}
+        `,
+        {
+          direction: "top",
+          sticky: true
+        }
+      );
+    });
+
+
+    if (selectedProvince) {
+      updateProvincePanel(selectedProvince);
+    } else {
+      updateNationalOverview(layer);
+    }
+  }
+
+
+  function updateNationalOverview(layer) {
+
+    const name =
+      document.getElementById("area-name");
+
+    const description =
+      document.getElementById("area-description");
+
+    const direction =
+      document.getElementById("strategic-direction");
+
+
+    if (name) {
+      name.textContent =
+        `Pakistan — ${layerNames[layer]}`;
+    }
+
+
+    const overviewDescriptions = {
+      combined:
+        "Combined priority brings together illustrative health, WASH, climate, displacement and operational-reach considerations.",
+
+      health:
+        "This layer illustrates how health burden, service access and population vulnerability could inform geographic targeting.",
+
+      wash:
+        "This layer illustrates potential water, sanitation, hygiene and environmental-health vulnerability.",
+
+      climate:
+        "This layer illustrates exposure to floods, drought, heatwaves, GLOFs, water scarcity and other climate-related hazards.",
+
+      displacement:
+        "This layer illustrates indicative pressure associated with displacement, migration, cross-border movement and mobile populations.",
+
+      reach:
+        "This layer illustrates existing PRCS branch presence, volunteer networks and potential operational reach."
+    };
+
+
+    if (description) {
+      description.textContent =
+        overviewDescriptions[layer];
+    }
+
+
+    if (direction) {
+      direction.textContent =
+        layer === "reach"
+          ? "Use existing PRCS presence to identify where services may be strengthened, extended or supported through partnerships."
+          : "Use this evidence layer alongside branch capacity, partner presence and affordability before making investment decisions.";
+    }
+  }
+
 
   provinceData.forEach((province) => {
+
+    const initialScore =
+      province.scores.combined;
+
     const marker = L.circleMarker(
       province.coordinates,
       {
-        radius: 14,
+        radius: getMarkerRadius(initialScore),
         fillColor:
-          getMarkerColour(
-            province.climate
+          getLayerColour(
+            initialScore,
+            "combined"
           ),
         color: "#ffffff",
         weight: 3,
         opacity: 1,
-        fillOpacity: 0.88
+        fillOpacity: 0.9
       }
     ).addTo(pakistanMap);
 
+
     marker.bindTooltip(
-      province.name,
+      `
+        <strong>${province.name}</strong><br>
+        Combined Priority:
+        ${scoreToLabel(initialScore)}
+      `,
       {
-        permanent: false,
-        direction: "top"
+        direction: "top",
+        sticky: true
       }
     );
 
-    marker.bindPopup(
-      `
-        <div class="map-popup">
-          <strong>${province.name}</strong>
-          <p>${province.direction}</p>
-        </div>
-      `
-    );
 
     marker.on("click", () => {
+
+      selectedProvince = province;
+
       updateProvincePanel(province);
 
       pakistanMap.flyTo(
@@ -433,17 +669,45 @@ if (
         }
       );
     });
+
+
+    provinceMarkers.push({
+      province: province,
+      marker: marker
+    });
   });
 
 
-  /* Reset button */
+  const layerButtons =
+    document.querySelectorAll(".layer-button");
+
+
+  layerButtons.forEach((button) => {
+
+    button.addEventListener("click", () => {
+
+      layerButtons.forEach((item) => {
+        item.classList.remove("active");
+      });
+
+      button.classList.add("active");
+
+      const selected =
+        button.dataset.layer;
+
+      updateMapLayer(selected);
+    });
+  });
+
 
   const resetControl =
     L.control({
       position: "topright"
     });
 
+
   resetControl.onAdd = function () {
+
     const button =
       L.DomUtil.create(
         "button",
@@ -451,20 +715,18 @@ if (
       );
 
     button.type = "button";
-    button.innerHTML =
-      "Reset view";
+    button.innerHTML = "Reset view";
 
-    button.title =
-      "Return to Pakistan overview";
+    L.DomEvent.disableClickPropagation(button);
 
-    L.DomEvent.disableClickPropagation(
-      button
-    );
 
     L.DomEvent.on(
       button,
       "click",
       () => {
+
+        selectedProvince = null;
+
         pakistanMap.flyTo(
           [30.3753, 69.3451],
           5,
@@ -472,16 +734,22 @@ if (
             duration: 0.8
           }
         );
+
+        updateNationalOverview(
+          selectedLayer
+        );
       }
     );
 
     return button;
   };
 
+
   resetControl.addTo(pakistanMap);
 
 
-  /* Ensure map renders correctly */
+  updateNationalOverview("combined");
+
 
   setTimeout(() => {
     pakistanMap.invalidateSize();
