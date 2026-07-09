@@ -1,618 +1,67 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
+PRCS
+SES-led PharmOSS–SES Joint Venture
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+PRCS Strategy Intelligence Lab
+Turning evidence into geographic priorities, institutional choices and fundable action.
 
-  <title>PRCS Strategy Intelligence Lab</title>
+Illustrative Proof of Concept
+INTERACTIVE DECISION SUPPORT
 
-  <!-- Leaflet map styling -->
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-  >
+Explore how PRCS evidence could be translated into strategic decisions.
+This prototype demonstrates how geographic vulnerability, institutional readiness, strategic prioritisation and organisational alignment may be brought together in one leadership decision-support environment.
 
-  <!-- Our own design file -->
-  <link rel="stylesheet" href="style.css">
-</head>
+3
+Interactive modules
+Geographic priorities, strategic choices and organisational alignment.
 
-<body>
+1. Where to Invest 2. What to Prioritise 3. Is PRCS Ready?
+GEOGRAPHIC PRIORITY EXPLORER
 
-  <!-- Top navigation -->
-  <header class="topbar">
-    <div class="brand-block">
-      <div class="brand-mark">PRCS</div>
+Where should institutional attention be directed?
+Select a geographic layer and explore indicative provincial profiles.
 
-      <div>
-        <p class="eyebrow">
-          SES-led PharmOSS–SES Joint Venture
-        </p>
+Illustrative data
+Combined Priority Health WASH Climate Displacement PRCS Reach
+SELECTED AREA
 
-        <h1>PRCS Strategy Intelligence Lab</h1>
+Pakistan — Combined Priority
+Combined priority brings together illustrative health, WASH, climate, displacement and operational-reach considerations.
 
-        <p class="subtitle">
-          Turning evidence into geographic priorities,
-          institutional choices and fundable action.
-        </p>
-      </div>
-    </div>
+Health vulnerabilityHigh
+WASH vulnerabilityHigh
+Climate exposureVery High
+Branch readinessMixed
+Illustrative strategic directionUse this evidence layer alongside branch capacity, partner presence and affordability before making investment decisions.
+STRATEGIC PRIORITY SIMULATOR
 
-    <div class="prototype-badge">
-      Illustrative Proof of Concept
-    </div>
-  </header>
+What should PRCS protect, scale or redesign?
+Adjust the criteria to see how strategic options may be assessed.
 
+Illustrative methodology
+Select a strategic intervention 
+Community Health
+INDICATIVE RESULT
 
-  <!-- Intro section -->
-  <section class="hero-section">
-    <div class="hero-content">
+Overall score
+72/ 100
+Recommended strategic treatment
 
-      <p class="section-label">
-        INTERACTIVE DECISION SUPPORT
-      </p>
+STRENGTHEN
+ORGANISATIONAL ALIGNMENT DIAGNOSTIC
 
-      <h2>
-        Explore how PRCS evidence could be translated
-        into strategic decisions.
-      </h2>
+Are the seven organisational elements aligned?
+Explore how the McKinsey 7S lens may support the PRCS Five-Domain Institutional Diagnostic.
 
-      <p>
-        This prototype demonstrates how geographic vulnerability,
-        institutional readiness, strategic prioritisation and
-        organisational alignment may be brought together in one
-        leadership decision-support environment.
-      </p>
+Supporting analytical lens
+ILLUSTRATIVE ALIGNMENT PROFILE
 
-    </div>
+Illustrative values only. Actual scores would be validated during the consultancy.
 
-    <div class="hero-card">
-      <span class="hero-number">3</span>
-
-      <div>
-        <strong>Interactive modules</strong>
-        <p>
-          Geographic priorities, strategic choices and
-          organisational alignment.
-        </p>
-      </div>
-    </div>
-  </section>
-
-
-  <!-- Tabs -->
-  <nav class="tab-navigation">
-
-    <button
-      class="tab-button active"
-      data-tab="map-module"
-    >
-      1. Where to Invest
-    </button>
-
-    <button
-      class="tab-button"
-      data-tab="priority-module"
-    >
-      2. What to Prioritise
-    </button>
-
-    <button
-      class="tab-button"
-      data-tab="alignment-module"
-    >
-      3. Is PRCS Ready?
-    </button>
-
-  </nav>
-
-
-  <!-- Main content -->
-  <main class="dashboard-container">
-
-    <!-- Module 1 -->
-    <section
-      id="map-module"
-      class="tab-panel active"
-    >
-
-      <div class="section-heading">
-        <div>
-          <p class="section-label">
-            GEOGRAPHIC PRIORITY EXPLORER
-          </p>
-
-          <h2>Where should institutional attention be directed?</h2>
-
-          <p>
-            Select a geographic layer and explore indicative
-            provincial profiles.
-          </p>
-        </div>
-
-        <span class="demo-label">
-          Illustrative data
-        </span>
-      </div>
-
-
-      <div class="layer-controls">
-
-        <div class="layer-controls">
-
-  <button
-    class="layer-button active"
-    data-layer="combined"
-  >
-    Combined Priority
-  </button>
-
-  <button
-    class="layer-button"
-    data-layer="health"
-  >
-    Health
-  </button>
-
-  <button
-    class="layer-button"
-    data-layer="wash"
-  >
-    WASH
-  </button>
-
-  <button
-    class="layer-button"
-    data-layer="climate"
-  >
-    Climate
-  </button>
-
-  <button
-    class="layer-button"
-    data-layer="displacement"
-  >
-    Displacement
-  </button>
-
-  <button
-    class="layer-button"
-    data-layer="reach"
-  >
-    PRCS Reach
-  </button>
-
-</div>
-      </div>
-
-
-      <div class="map-layout">
-
-       <div id="map"></div>
-
-
-        <aside class="province-panel">
-
-          <p class="section-label">
-            SELECTED AREA
-          </p>
-
-<h3 id="area-name">Pakistan Overview</h3>
-
-<p id="area-description" class="panel-description">
-  Click a province on the map to view its illustrative
-  vulnerability and institutional profile.
-</p>
-
-
-          <div class="metric-card">
-  <span>Health vulnerability</span>
-  <strong id="health-score">High</strong>
-</div>
-
-<div class="metric-card">
-  <span>WASH vulnerability</span>
-  <strong id="wash-score">High</strong>
-</div>
-
-<div class="metric-card">
-  <span>Climate exposure</span>
-  <strong id="climate-score">Very High</strong>
-</div>
-
-<div class="metric-card">
-  <span>Branch readiness</span>
-  <strong id="readiness-score">Developing</strong>
-</div>
-
-          </div>
-
-
-          <div class="recommendation-card">
-            <span>Illustrative strategic direction</span>
-
-           <strong id="strategic-direction">
-  Strengthen integrated emergency Health and WASH
-  preparedness.
-</strong>
-          </div>
-
-        </aside>
-
-      </div>
-
-    </section>
-
-
-    <!-- Module 2 -->
-    <section
-      id="priority-module"
-      class="tab-panel"
-    >
-
-      <div class="section-heading">
-
-        <div>
-          <p class="section-label">
-            STRATEGIC PRIORITY SIMULATOR
-          </p>
-
-          <h2>What should PRCS protect, scale or redesign?</h2>
-
-          <p>
-            Adjust the criteria to see how strategic options
-            may be assessed.
-          </p>
-        </div>
-
-        <span class="demo-label">
-          Illustrative methodology
-        </span>
-
-      </div>
-
-
-      <div class="simulator-layout">
-
-        <div class="control-card">
-
-          <label for="intervention">
-            Select a strategic intervention
-          </label>
-
-          <select id="intervention">
-
-            <option>Community Health</option>
-            <option>Emergency WASH</option>
-            <option>Nutrition</option>
-            <option>First Aid</option>
-            <option>Ambulance Services</option>
-            <option>Blood Services</option>
-            <option>MHPSS</option>
-            <option>Epidemic Preparedness</option>
-            <option>Cash for Health</option>
-
-          </select>
-
-
-          <div class="slider-group">
-
-            <label>
-              <span>Humanitarian impact</span>
-              <strong id="impact-value">8</strong>
-            </label>
-
-            <input
-              id="impact"
-              type="range"
-              min="1"
-              max="10"
-              value="8"
-            >
-
-          </div>
-
-
-          <div class="slider-group">
-
-            <label>
-              <span>Equity</span>
-              <strong id="equity-value">8</strong>
-            </label>
-
-            <input
-              id="equity"
-              type="range"
-              min="1"
-              max="10"
-              value="8"
-            >
-
-          </div>
-
-
-          <div class="slider-group">
-
-            <label>
-              <span>Feasibility</span>
-              <strong id="feasibility-value">6</strong>
-            </label>
-
-            <input
-              id="feasibility"
-              type="range"
-              min="1"
-              max="10"
-              value="6"
-            >
-
-          </div>
-
-
-          <div class="slider-group">
-
-            <label>
-              <span>Affordability</span>
-              <strong id="affordability-value">6</strong>
-            </label>
-
-            <input
-              id="affordability"
-              type="range"
-              min="1"
-              max="10"
-              value="6"
-            >
-
-          </div>
-
-
-          <div class="slider-group">
-
-            <label>
-              <span>Financing potential</span>
-              <strong id="financing-value">7</strong>
-            </label>
-
-            <input
-              id="financing"
-              type="range"
-              min="1"
-              max="10"
-              value="7"
-            >
-
-          </div>
-
-
-          <div class="slider-group">
-
-            <label>
-              <span>Scalability</span>
-              <strong id="scalability-value">7</strong>
-            </label>
-
-            <input
-              id="scalability"
-              type="range"
-              min="1"
-              max="10"
-              value="7"
-            >
-
-          </div>
-
-
-          <div class="slider-group">
-
-            <label>
-              <span>Partnership potential</span>
-              <strong id="partnership-value">8</strong>
-            </label>
-
-            <input
-              id="partnership"
-              type="range"
-              min="1"
-              max="10"
-              value="8"
-            >
-
-          </div>
-
-
-          <div class="slider-group">
-
-            <label>
-              <span>Measurability</span>
-              <strong id="measurability-value">7</strong>
-            </label>
-
-            <input
-              id="measurability"
-              type="range"
-              min="1"
-              max="10"
-              value="7"
-            >
-
-          </div>
-
-        </div>
-
-
-        <div class="result-card">
-
-          <p class="section-label">
-            INDICATIVE RESULT
-          </p>
-
-          <span class="score-label">
-            Overall score
-          </span>
-
-          <div class="score-circle">
-            <span id="total-score">72</span>
-            <small>/ 100</small>
-          </div>
-
-          <p class="recommendation-title">
-            Recommended strategic treatment
-          </p>
-
-          <div
-            id="priority-recommendation"
-            class="recommendation-pill"
-          >
-            STRENGTHEN
-          </div>
-
-          <p id="recommendation-explanation">
-            Strong humanitarian value and financing potential,
-            with institutional strengthening required before
-            responsible scale-up.
-          </p>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- Module 3 -->
-    <section
-      id="alignment-module"
-      class="tab-panel"
-    >
-
-      <div class="section-heading">
-
-        <div>
-          <p class="section-label">
-            ORGANISATIONAL ALIGNMENT DIAGNOSTIC
-          </p>
-
-          <h2>Are the seven organisational elements aligned?</h2>
-
-          <p>
-            Explore how the McKinsey 7S lens may support the
-            PRCS Five-Domain Institutional Diagnostic.
-          </p>
-        </div>
-
-        <span class="demo-label">
-          Supporting analytical lens
-        </span>
-
-      </div>
-
-
-      <div class="alignment-layout">
-
-        <div class="seven-s-grid">
-
-          <button class="s-card">
-            <span>Hard S</span>
-            <strong>Strategy</strong>
-            <p>Direction, priorities and comparative advantage.</p>
-          </button>
-
-          <button class="s-card">
-            <span>Hard S</span>
-            <strong>Structure</strong>
-            <p>NHQ and branch roles, authority and accountability.</p>
-          </button>
-
-          <button class="s-card">
-            <span>Hard S</span>
-            <strong>Systems</strong>
-            <p>Planning, operations, logistics, finance and data.</p>
-          </button>
-
-          <button class="s-card centre-card">
-            <span>Core</span>
-            <strong>Shared Values</strong>
-            <p>
-              Humanitarian principles, trust, volunteerism,
-              service and accountability.
-            </p>
-          </button>
-
-          <button class="s-card">
-            <span>Soft S</span>
-            <strong>Style</strong>
-            <p>Leadership, decision-making and collaboration.</p>
-          </button>
-
-          <button class="s-card">
-            <span>Soft S</span>
-            <strong>Staff</strong>
-            <p>Workforce, volunteers, deployment and development.</p>
-          </button>
-
-          <button class="s-card">
-            <span>Soft S</span>
-            <strong>Skills</strong>
-            <p>Technical, managerial and emergency competencies.</p>
-          </button>
-
-        </div>
-
-
-        <div class="alignment-side-panel">
-
-  <div class="chart-card">
-
-    <p class="section-label">
-      ILLUSTRATIVE ALIGNMENT PROFILE
-    </p>
-
-    <canvas id="alignment-chart"></canvas>
-
-    <p class="chart-note">
-      Illustrative values only. Actual current and desired
-      scores would be validated during the
-
-      </div>
-
-    </section>
-
-  </main>
-
-
-  <!-- Footer -->
-  <footer>
-
-    <strong>Important demonstration disclaimer</strong>
-
-    <p>
-      This proof of concept uses illustrative placeholder data and
-      does not represent assessed PRCS performance, official
-      vulnerability rankings or approved institutional priorities.
-      Final indicators, data sources, scoring weights, geographic
-      layers and user-access arrangements would be agreed with PRCS
-      during inception.
-    </p>
-
-  </footer>
-
-
-  <!-- Chart.js -->
-  <script
-    src="https://cdn.jsdelivr.net/npm/chart.js"
-  ></script>
-
-  <!-- Leaflet -->
-  <script
-    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-  ></script>
-
-  <!-- Our own JavaScript -->
-  <script src="script.js"></script>
-
-</body>
-</html>
+Hard S
+Strategy
+Illustrative current position
+Illustrative desired position
+Affected PRCS diagnostic domains
+Illustrative diagnostic questions
+Important demonstration disclaimer
+This proof of concept uses illustrative placeholder data and does not represent assessed PRCS performance, official vulnerability rankings or approved institutional priorities. Final indicators, data sources, scoring weights, geographic layers and user-access arrangements would be agreed with PRCS during inception.
